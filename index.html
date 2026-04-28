@@ -144,6 +144,17 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
+<header>
+  <h1>图文投放选号工具</h1>
+  <span id="hd-info">加载中...</span>
+</header>
+<div class="tabs">
+  <div class="tab active" onclick="go('query')">账号查询</div>
+  <div class="tab" onclick="go('recommend')">推荐账号</div>
+  <div class="tab" onclick="go('plan')">账号推荐（班次）</div>
+  <div class="tab" onclick="go('direction')">本月方向热度</div>
+</div>
+
 <div id="panel-plan" class="panel">
   <div class="plan-form">
     <h3>填写班次信息</h3>
