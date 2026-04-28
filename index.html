@@ -8,12 +8,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f5f5;color:#1a1a1a;font-size:14px}
 header{background:#fff;border-bottom:1px solid #e8e8e8;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
+header h1{font-size:16px;font-weight:600}
+header span{font-size:12px;color:#999}
 .tabs{display:flex;background:#fff;border-bottom:1px solid #e8e8e8;padding:0 24px;overflow-x:auto}
-.tab{padding:14px 18px;font-size:14px;color:#666;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all .15s}
+.tab{padding:14px 18px;font-size:14px;color:#666;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .tab.active{color:#1677ff;border-bottom-color:#1677ff;font-weight:500}
 .panel{display:none;padding:20px 24px;max-width:960px;margin:0 auto}
 .panel.active{display:block}
+/* 搜索 */
 .search-bar{display:flex;gap:8px;margin-bottom:10px}
 .search-bar input{flex:1;padding:9px 12px;border:1px solid #d9d9d9;border-radius:6px;font-size:14px;outline:none}
 .search-bar input:focus{border-color:#1677ff}
@@ -21,9 +23,11 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 .suggestions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .sug-tag{font-size:12px;padding:3px 10px;border-radius:20px;background:#f0f0f0;color:#555;cursor:pointer;border:1px solid #e0e0e0}
 .sug-tag:hover{background:#e6f4ff;color:#1677ff;border-color:#91caff}
+/* 筛选 */
 .filters{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .filters select{padding:7px 10px;border:1px solid #d9d9d9;border-radius:6px;font-size:13px;background:#fff}
 .filters label{font-size:13px;color:#666}
+/* 卡片 */
 .card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:16px;margin-bottom:10px}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
 .account-name{font-size:15px;font-weight:600}
@@ -34,15 +38,15 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 .b-orange{background:#fff7e6;color:#d46b08;border:1px solid #ffd591}
 .b-red{background:#fff2f0;color:#cf1322;border:1px solid #ffa39e}
 .b-gray{background:#fafafa;color:#8c8c8c;border:1px solid #d9d9d9}
-.b-purple{background:#f9f0ff;color:#531dab;border:1px solid #d3adf7}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
 .metric{background:#fafafa;border-radius:6px;padding:9px;text-align:center}
 .metric-val{font-size:16px;font-weight:600;line-height:1.2}
 .metric-label{font-size:11px;color:#999;margin-top:2px}
-.info-rows{margin-bottom:8px}
 .info-row{display:flex;gap:16px;flex-wrap:wrap;padding:6px 0;border-top:1px solid #f5f5f5}
 .info-item{display:flex;align-items:center;gap:4px}
-.ik{font-size:12px;color:#999}.iv{font-size:12px;color:#333;font-weight:500}.iv-red{font-size:12px;color:#cf1322;font-weight:600}
+.ik{font-size:12px;color:#999}
+.iv{font-size:12px;color:#333;font-weight:500}
+.iv-red{font-size:12px;color:#cf1322;font-weight:600}
 .warn-row{padding:6px 10px;border-radius:5px;font-size:12px;font-weight:500;margin-bottom:5px}
 .warn-cost{background:#fff7e6;color:#d46b08;border:1px solid #ffd591}
 .warn-no-order{background:#fff2f0;color:#cf1322;border:1px solid #ffa39e}
@@ -54,6 +58,7 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 .dir-ok{background:#f6ffed;border:1px solid #b7eb8f;border-radius:6px;padding:8px 14px;margin-bottom:10px;font-size:12px;color:#389e0d}
 .empty{text-align:center;padding:40px;color:#bbb;font-size:14px}
 .count-tip{font-size:12px;color:#999;margin-bottom:8px}
+/* 方向表格 */
 .dir-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e8e8e8;margin-bottom:16px}
 .dir-table th{background:#fafafa;padding:9px 12px;text-align:left;font-size:12px;color:#666;font-weight:500;border-bottom:1px solid #e8e8e8}
 .dir-table td{padding:9px 12px;font-size:13px;border-bottom:1px solid #f5f5f5}
@@ -70,24 +75,24 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 .form-section{margin-bottom:12px}
 .form-section-title{font-size:12px;color:#666;margin-bottom:6px}
 .tag-select{display:flex;flex-wrap:wrap;gap:6px}
-.dir-tag{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid #d9d9d9;cursor:pointer;background:#fff;color:#555;user-select:none;transition:all .1s}
-.dir-tag:hover{border-color:#1677ff;color:#1677ff}
+.dir-tag{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid #d9d9d9;cursor:pointer;background:#fff;color:#555;user-select:none}
 .dir-tag.sel-main{background:#1677ff;color:#fff;border-color:#1677ff}
 .dir-tag.sel-test{background:#722ed1;color:#fff;border-color:#722ed1}
 .pref-tags{display:flex;flex-wrap:wrap;gap:6px}
 .pref-tag{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid #d9d9d9;cursor:pointer;background:#fff;color:#555;user-select:none}
-.pref-tag:hover{border-color:#52c41a;color:#52c41a}
 .pref-tag.sel{background:#52c41a;color:#fff;border-color:#52c41a}
-.plan-btn{padding:9px 28px;background:#1677ff;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;margin-top:4px}
+.plan-btns{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap}
+.plan-btn{padding:9px 24px;background:#1677ff;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500}
 .plan-btn:hover{background:#0958d9}
+.refresh-btn{padding:9px 20px;background:#fff;color:#1677ff;border:1px solid #1677ff;border-radius:6px;cursor:pointer;font-size:14px;display:none}
 .summary-bar{background:#fff;border:1px solid #1677ff;border-radius:8px;padding:12px 16px;margin-bottom:12px;display:flex;gap:0;flex-wrap:wrap;align-items:center;position:sticky;top:52px;z-index:50}
 .sum-item{display:flex;flex-direction:column;align-items:center;padding:0 16px;border-right:1px solid #f0f0f0}
 .sum-item:last-of-type{border-right:none}
 .sum-val{font-size:20px;font-weight:700;color:#1677ff}
+.sum-val.rh{color:#389e0d}
 .sum-val.warn{color:#cf1322}
 .sum-label{font-size:11px;color:#999;margin-top:2px}
 .export-btn{margin-left:auto;padding:7px 16px;background:#fff;color:#1677ff;border:1px solid #1677ff;border-radius:6px;cursor:pointer;font-size:13px}
-.export-btn:hover{background:#e6f4ff}
 .plan-card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:14px;margin-bottom:8px;cursor:pointer;transition:border .15s}
 .plan-card:hover{border-color:#91caff}
 .plan-card.checked{border-color:#1677ff;background:#f6fbff}
@@ -102,40 +107,39 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 .type-badge-线索型{background:#e6f4ff;color:#1677ff;border:1px solid #91caff}
 .type-badge-测试型{background:#f9f0ff;color:#531dab;border:1px solid #d3adf7}
 .group-title{font-size:13px;font-weight:600;color:#1a1a1a;margin:14px 0 8px;padding-left:4px;border-left:3px solid #1677ff}
-@media(max-width:600px){.metrics,.plan-metrics{grid-template-columns:repeat(2,1fr)}.card-top{flex-direction:column}.badges{justify-content:flex-start}.sum-item{padding:0 10px}}
+@media(max-width:600px){.metrics,.plan-metrics{grid-template-columns:repeat(2,1fr)}.card-top{flex-direction:column}.badges{justify-content:flex-start}}
 </style>
 </head>
-<body>
-<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center;min-height:100vh">
+<body style="overflow:hidden">
+
+<!-- 密码验证 -->
+<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:12px;padding:40px 36px;width:320px;box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center">
     <div style="font-size:28px;margin-bottom:8px">🔒</div>
     <div style="font-size:18px;font-weight:600;margin-bottom:4px">图文投放选号工具</div>
     <div style="font-size:13px;color:#999;margin-bottom:24px">请输入访问密码</div>
-    <input id="auth-input" type="password" placeholder="输入密码" 
-      style="width:100%;padding:10px 12px;border:1px solid #d9d9d9;border-radius:6px;font-size:14px;outline:none;margin-bottom:12px;text-align:center"
+    <input id="auth-input" type="password" placeholder="输入密码"
+      style="width:100%;padding:10px 12px;border:1px solid #d9d9d9;border-radius:6px;font-size:14px;outline:none;margin-bottom:8px;text-align:center"
       onkeydown="if(event.key==='Enter')checkPwd()">
     <div id="auth-err" style="font-size:12px;color:#cf1322;margin-bottom:8px;height:16px"></div>
-    <button onclick="checkPwd()" 
-      style="width:100%;padding:10px;background:#1677ff;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:500">
-      进入
-    </button>
+    <button onclick="checkPwd()"
+      style="width:100%;padding:10px;background:#1677ff;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:500">进入</button>
   </div>
 </div>
 <script>
 function checkPwd(){
-  const val=document.getElementById('auth-input').value;
+  var val=document.getElementById('auth-input').value;
   if(val==='pinzhi8866'){
     document.getElementById('auth-mask').style.display='none';
     document.body.style.overflow='';
-    localStorage.setItem('xuanhao_auth','1');
+    localStorage.setItem('xh_auth','1');
   } else {
     document.getElementById('auth-err').textContent='密码错误，请重试';
     document.getElementById('auth-input').value='';
-    document.getElementById('auth-input').focus();
   }
 }
 window.addEventListener('DOMContentLoaded',function(){
-  if(localStorage.getItem('xuanhao_auth')==='1'){
+  if(localStorage.getItem('xh_auth')==='1'){
     document.getElementById('auth-mask').style.display='none';
     document.body.style.overflow='';
   } else {
@@ -155,61 +159,17 @@ window.addEventListener('DOMContentLoaded',function(){
   <div class="tab" onclick="go('direction')">本月方向热度</div>
 </div>
 
-<div id="panel-plan" class="panel">
-  <div class="plan-form">
-    <h3>填写班次信息</h3>
-    <div class="form-row">
-      <div class="form-group">
-        <label>总预算（元）</label>
-        <input type="number" id="p-budget" placeholder="如：45000" min="0">
-      </div>
-      <div class="form-group">
-        <label>目标线索量（条）</label>
-        <input type="number" id="p-leads" placeholder="如：200" min="0">
-      </div>
-      <div class="form-group">
-        <label>复投间隔要求</label>
-        <select id="p-interval">
-          <option value="0">不限</option>
-          <option value="14">≥14天</option>
-          <option value="30" selected>≥30天</option>
-          <option value="40">≥40天</option>
-          <option value="60">≥60天</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">主投方向（可多选）</div>
-      <div class="tag-select" id="main-dirs"></div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">测试方向（紫色标注，可多选）</div>
-      <div class="tag-select" id="test-dirs"></div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">偏好设置（可多选）</div>
-      <div class="pref-tags">
-        <span class="pref-tag" data-pref="interval30">优先间隔30-40天</span>
-        <span class="pref-tag" data-pref="rate50">优先出单率>50%</span>
-        <span class="pref-tag" data-pref="leads100">优先线索量>100条/次</span>
-        <span class="pref-tag" data-pref="hideNoOrder">排除近3次未出单</span>
-        <span class="pref-tag" data-pref="roi2">优先ROI>2</span>
-      </div>
-    </div>
-    <button class="plan-btn" onclick="genPlan()">生成备选池</button> <button class="plan-btn" id="refresh-btn" onclick="refreshPlan()" style="background:#fff;color:#1677ff;border:1px solid #1677ff;margin-left:8px;display:none">🔄 换一批</button>
-  </div>
-  <div id="plan-result"></div>
-</div>
-
+<!-- 账号查询 -->
 <div id="panel-query" class="panel active">
   <div class="search-bar">
-    <input id="qi" type="text" placeholder="输入账号名称关键词..." oninput="onInput()" onkeydown="if(event.key==='Enter')doSearch()">
+    <input id="qi" type="text" placeholder="输入账号名称关键词，如：法律、质量、审计..." oninput="onQInput()" onkeydown="if(event.key==='Enter')doSearch()">
     <button onclick="doSearch()">查询</button>
   </div>
   <div id="qs" class="suggestions"></div>
   <div id="qr"></div>
 </div>
 
+<!-- 推荐账号 -->
 <div id="panel-recommend" class="panel">
   <div class="filters">
     <label>人群：</label>
@@ -237,6 +197,57 @@ window.addEventListener('DOMContentLoaded',function(){
   <div id="rr"></div>
 </div>
 
+<!-- 账号推荐（班次） -->
+<div id="panel-plan" class="panel">
+  <div class="plan-form">
+    <h3>填写班次信息</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>总预算（元）</label>
+        <input type="number" id="p-budget" placeholder="如：45000" min="0">
+      </div>
+      <div class="form-group">
+        <label>目标线索量（条）</label>
+        <input type="number" id="p-leads" placeholder="如：500" min="0">
+      </div>
+      <div class="form-group">
+        <label>复投间隔</label>
+        <select id="p-interval">
+          <option value="0">不限</option>
+          <option value="14">≥14天</option>
+          <option value="30" selected>≥30天</option>
+          <option value="40">≥40天</option>
+          <option value="60">≥60天</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">主投方向（可多选，🟢本月出单）</div>
+      <div class="tag-select" id="main-dirs"></div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">测试方向（紫色标注）</div>
+      <div class="tag-select" id="test-dirs"></div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">偏好设置（可多选）</div>
+      <div class="pref-tags">
+        <span class="pref-tag" data-pref="interval30">优先间隔30-40天</span>
+        <span class="pref-tag" data-pref="rate50">优先出单率>50%</span>
+        <span class="pref-tag" data-pref="leads100">优先线索量>100条/次</span>
+        <span class="pref-tag" data-pref="hideNoOrder">排除近3次未出单</span>
+        <span class="pref-tag" data-pref="roi2">优先ROI>2</span>
+      </div>
+    </div>
+    <div class="plan-btns">
+      <button class="plan-btn" onclick="genPlan()">生成备选池</button>
+      <button class="refresh-btn" id="refresh-btn" onclick="refreshPlan()">🔄 换一批</button>
+    </div>
+  </div>
+  <div id="plan-result"></div>
+</div>
+
+<!-- 本月方向热度 -->
 <div id="panel-direction" class="panel">
   <p class="sec-title">本月（2026年4月）各方向出单情况</p>
   <div id="dr"></div>
@@ -244,377 +255,337 @@ window.addEventListener('DOMContentLoaded',function(){
 
 <script src="db.js"></script>
 <script>
-const AC=DB.accounts,DIR=DB.directions,TODAY='2026-04-24';
+// ===== 全局数据 =====
+var AC=DB.accounts, DIR=DB.directions, TODAY='2026-04-24';
 document.getElementById('hd-info').textContent='共 '+AC.length+' 个账号 · 截至 '+TODAY;
 
-const crowds=[...new Set(AC.map(a=>a['主要人群']).filter(Boolean))].sort();
-const sel=document.getElementById('fc');
-crowds.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);});
+// 初始化人群筛选
+var crowds=[...new Set(AC.map(function(a){return a['主要人群'];}).filter(Boolean))].sort();
+var recSel=document.getElementById('fc');
+crowds.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;recSel.appendChild(o);});
 
-// 班次选号方向标签 - 用近期热度里的细分+账号有的细分
-const activeSubs=new Set(DIR.filter(d=>d['总GMV']>0).map(d=>d['细分']));
-// 只显示出单次数>0且投放次数>=3的细分，按出单账号数排序
-const subCount={};
-AC.forEach(a=>{if(a['出单次数']>0&&a['投放次数']>=3&&a['主要细分']){subCount[a['主要细分']]=(subCount[a['主要细分']]||0)+1;}});
-const allSubs=Object.entries(subCount).filter(([k,v])=>v>=2).sort((a,b)=>b[1]-a[1]).map(([k])=>k);
+// 初始化班次方向标签
+var activeSubs=new Set(DIR.filter(function(d){return d['总GMV']>0;}).map(function(d){return d['细分'];}));
+var subCount={};
+AC.forEach(function(a){if(a['出单次数']>0&&a['投放次数']>=2&&a['主要细分']){subCount[a['主要细分']]=(subCount[a['主要细分']]||0)+1;}});
+var allSubs=Object.entries(subCount).filter(function(e){return e[1]>=2;}).sort(function(a,b){return b[1]-a[1];}).map(function(e){return e[0];});
 
-const mainBox=document.getElementById('main-dirs');
-const testBox=document.getElementById('test-dirs');
-allSubs.forEach(d=>{
-  const dot=activeSubs.has(d)?'🟢 ':'';
-  [mainBox,testBox].forEach((box,i)=>{
-    const t=document.createElement('span');
-    t.className='dir-tag';
-    t.textContent=dot+d;
-    t.dataset.sub=d;
-    t.onclick=()=>{
-      if(i===0) t.classList.toggle('sel-main');
-      else t.classList.toggle('sel-test');
-    };
-    box.appendChild(t);
-  });
+var mainBox=document.getElementById('main-dirs');
+var testBox=document.getElementById('test-dirs');
+allSubs.forEach(function(d){
+  var dot=activeSubs.has(d)?'🟢 ':'';
+  var t1=document.createElement('span'); t1.className='dir-tag'; t1.textContent=dot+d; t1.dataset.sub=d;
+  t1.onclick=function(){t1.classList.toggle('sel-main');};
+  mainBox.appendChild(t1);
+  var t2=document.createElement('span'); t2.className='dir-tag'; t2.textContent=dot+d; t2.dataset.sub=d;
+  t2.onclick=function(){t2.classList.toggle('sel-test');};
+  testBox.appendChild(t2);
 });
 
 // 偏好标签
-document.querySelectorAll('.pref-tag').forEach(t=>{
-  t.onclick=()=>t.classList.toggle('sel');
-});
+document.querySelectorAll('.pref-tag').forEach(function(t){t.onclick=function(){t.classList.toggle('sel');};});
 
-function getPrefs(){
-  const prefs={};
-  document.querySelectorAll('.pref-tag.sel').forEach(t=>{prefs[t.dataset.pref]=true;});
-  return prefs;
+// ===== 工具函数 =====
+function rC(r){return r>=2?'rh':r>=1?'rm':'rl';}
+
+function iBadge(d){
+  if(d>=999) return '<span class="badge b-gray">未投放</span>';
+  if(d<=14) return '<span class="badge b-orange">'+d+'天前·建议间隔</span>';
+  if(d<=30) return '<span class="badge b-blue">'+d+'天前</span>';
+  return '<span class="badge b-green">'+d+'天前·可复投</span>';
 }
+
+function getDirInfo(a){
+  var sub=a['主要细分'], crowd=a['主要人群'];
+  var di=DIR.find(function(d){return d['细分']===sub;})||DIR.find(function(d){return d['人群']===crowd;});
+  if(!di||di['总消耗']===0) return {tip:'',dirROI:null};
+  var label=DIR.find(function(d){return d['细分']===sub;})?'本月【'+sub+'】细分':'本月【'+crowd+'】方向';
+  if(di['总GMV']>0) return {tip:'<div class="dir-ok">'+label+'：消耗¥'+Math.round(di['总消耗']).toLocaleString()+' / GMV¥'+Math.round(di['总GMV']).toLocaleString()+' / ROI '+di['ROI'].toFixed(2)+'</div>',dirROI:di['ROI']};
+  return {tip:'<div class="dir-warn">⚠️ '+label+'：消耗¥'+Math.round(di['总消耗']).toLocaleString()+' 但本月GMV为0</div>',dirROI:0};
+}
+
+function getVerdict(a,dirROI){
+  var roi=a['ROI']||0, rate=parseFloat(a['出单率'])||0, n=a['投放次数']||0, noOrder=a['近3次未出单']==='近3次未出单';
+  if(dirROI!==null&&dirROI<1) return {t:'方向本月跑不动，谨慎',c:'v-caution'};
+  if(noOrder&&roi>=1) return {t:'历史ROI好但近3次未出单，谨慎复投',c:'v-caution'};
+  if(noOrder) return {t:'近3次未出单，不建议',c:'v-no'};
+  if(roi>=2&&rate>=0.5&&n>=3) return {t:'强烈推荐复投',c:'v-yes'};
+  if(roi>=1&&rate>=0.3&&n>=2) return {t:'建议复投',c:'v-yes'};
+  if(roi>=1&&a['出单次数']>0) return {t:'可小额测试',c:'v-caution'};
+  if(a['出单次数']>0) return {t:'谨慎，ROI不足1',c:'v-caution'};
+  return {t:'不建议，从未出单',c:'v-no'};
+}
+
+function renderCard(a,dirROI){
+  var roi=a['ROI']||0, rate=parseFloat(a['出单率']||0), v=getVerdict(a,dirROI), days=a['距今天数']||999;
+  var cost=parseFloat(a['历史线索成本']||0), leads=parseInt(a['总线索量']||0), costNote=a['成本标注']||'', noOrder=a['近3次未出单']==='近3次未出单';
+  var warns='';
+  if(noOrder) warns+='<div class="warn-row warn-no-order">⚠️ 近3次投放均未出单</div>';
+  if(costNote) warns+='<div class="warn-row warn-cost">📊 '+costNote+'</div>';
+  return '<div class="card">'+
+    '<div class="card-top"><span class="account-name">'+a['账号']+'</span>'+
+    '<div class="badges">'+iBadge(days)+'<span class="badge '+(roi>=2?'b-green':roi>=1?'b-blue':'b-red')+'">ROI '+roi.toFixed(2)+'</span>'+(noOrder?'<span class="badge b-red">近3次未出单</span>':'')+'</div></div>'+
+    '<div class="metrics">'+
+    '<div class="metric"><div class="metric-val">'+(rate*100).toFixed(0)+'%</div><div class="metric-label">出单率</div></div>'+
+    '<div class="metric"><div class="metric-val">'+a['投放次数']+'</div><div class="metric-label">投放次数</div></div>'+
+    '<div class="metric"><div class="metric-val">'+roi.toFixed(2)+'</div><div class="metric-label">历史ROI</div></div>'+
+    '<div class="metric"><div class="metric-val">¥'+(a['总GMV']?Math.round(a['总GMV']).toLocaleString():'-')+'</div><div class="metric-label">历史总GMV</div></div>'+
+    '</div>'+
+    '<div class="info-row">'+
+    '<div class="info-item"><span class="ik">人群</span><span class="iv">'+(a['主要人群']||'-')+'</span></div>'+
+    '<div class="info-item"><span class="ik">细分</span><span class="iv">'+(a['主要细分']||'-')+'</span></div>'+
+    '<div class="info-item"><span class="ik">最近投放</span><span class="iv">'+(a['最近投放日期']||'无')+'</span></div>'+
+    '</div>'+
+    '<div class="info-row">'+
+    '<div class="info-item"><span class="ik">历史进线</span><span class="iv">'+(leads?leads+'条':'-')+'</span></div>'+
+    '<div class="info-item"><span class="ik">线索成本</span><span class="'+(cost>120?'iv-red':'iv')+'">'+(cost?'¥'+cost.toFixed(1):'-')+'</span></div>'+
+    '<div class="info-item"><span class="ik">最近3次GMV</span><span class="iv">'+(a['最近3次GMV']||'-')+'</span></div>'+
+    '</div>'+
+    warns+
+    '<div class="verdict '+v.c+'">'+v.t+'</div>'+
+    '</div>';
+}
+
+// ===== 账号查询 =====
+function onQInput(){
+  var val=document.getElementById('qi').value.trim(), box=document.getElementById('qs');
+  if(!val){box.innerHTML='';return;}
+  box.innerHTML=AC.filter(function(a){return a['账号'].includes(val);}).slice(0,8).map(function(a){
+    return '<span class="sug-tag" onclick="pickQ(\''+a['账号'].replace(/'/g,"\\'")+'\')">' +a['账号']+'</span>';
+  }).join('');
+}
+function pickQ(name){document.getElementById('qi').value=name;document.getElementById('qs').innerHTML='';doSearch();}
+function doSearch(){
+  var val=document.getElementById('qi').value.trim(), el=document.getElementById('qr');
+  if(!val){el.innerHTML='<p class="empty">请输入账号名称</p>';return;}
+  var hits=AC.filter(function(a){return a['账号'].includes(val);});
+  if(!hits.length){el.innerHTML='<p class="empty">未找到账号</p>';return;}
+  el.innerHTML='<p class="count-tip">找到 '+hits.length+' 个相关账号</p>'+hits.slice(0,10).map(function(a){
+    var di=getDirInfo(a); return di.tip+renderCard(a,di.dirROI);
+  }).join('');
+}
+
+// ===== 推荐账号 =====
+function doRec(){
+  var crowd=document.getElementById('fc').value, sort=document.getElementById('fs').value;
+  var interval=parseInt(document.getElementById('fi').value)||0, hideNo=document.getElementById('fno').value==='1';
+  var el=document.getElementById('rr');
+  var tip='';
+  if(crowd){
+    var di=DIR.find(function(d){return d['人群']===crowd;});
+    if(di&&di['ROI']<1&&di['总消耗']>0) tip='<div class="dir-warn">⚠️ '+crowd+' 本月ROI '+di['ROI'].toFixed(2)+'，跑不动</div>';
+    else if(di&&di['总GMV']>0) tip='<div class="dir-ok">✓ '+crowd+' 本月ROI '+di['ROI'].toFixed(2)+'，方向良好</div>';
+  }
+  var list=AC.filter(function(a){
+    if(a['出单次数']<=0||(a['ROI']||0)<1||a['投放次数']<2) return false;
+    if(crowd&&a['主要人群']!==crowd) return false;
+    if(interval&&(a['距今天数']||0)<interval) return false;
+    if(hideNo&&a['近3次未出单']==='近3次未出单') return false;
+    return true;
+  });
+  if(sort==='roi') list.sort(function(a,b){return (b['ROI']||0)-(a['ROI']||0);});
+  else if(sort==='gmv') list.sort(function(a,b){return (b['总GMV']||0)-(a['总GMV']||0);});
+  else if(sort==='rate') list.sort(function(a,b){return (parseFloat(b['出单率'])||0)-(parseFloat(a['出单率'])||0);});
+  else list.sort(function(a,b){return (a['距今天数']||999)-(b['距今天数']||999);});
+  var dirROI=crowd?((DIR.find(function(d){return d['人群']===crowd;})||{})['ROI']||null):null;
+  el.innerHTML=tip+(list.length?'<p class="count-tip">共 '+list.length+' 个符合条件，显示前30个</p>'+list.slice(0,30).map(function(a){return renderCard(a,dirROI);}).join(''):'<p class="empty">没有符合条件的账号</p>');
+}
+
+// ===== 班次选号 =====
+var _pool=[], _page=0, _checkedSet=new Set();
 
 function getType(a,isTest){
   if(isTest) return '测试型';
-  const roi=a['ROI']||0,rate=parseFloat(a['出单率']||0);
-  const avgLeads=parseInt(a['平均单次进线']||0);
+  var roi=a['ROI']||0, rate=parseFloat(a['出单率']||0), leads=parseInt(a['平均单次进线']||0);
   if(roi>=1&&rate>=0.3) return '转化型';
-  if(avgLeads>=50) return '线索型';
   return '线索型';
 }
 
-let _planPool=[], _planPage=0, _planPageSize=30;
+function renderPlanCard(a,isTest){
+  var roi=a['ROI']||0, rate=parseFloat(a['出单率']||0), days=a['距今天数']||999;
+  var budget=parseInt(a['建议投放金额']||0), leads=parseInt(a['平均单次进线']||0);
+  var noOrder=a['近3次未出单']==='近3次未出单', type=getType(a,isTest);
+  var name=a['账号'], checked=_checkedSet.has(name);
+  var dirHot=DIR.some(function(d){return d['细分']===a['主要细分']&&d['总GMV']>0;});
+  var safeId='pc_'+name.replace(/[^a-zA-Z0-9]/g,'_');
+  return '<div class="plan-card'+(checked?' checked':'')+'" id="'+safeId+'" onclick="togglePlanCard(\''+name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">' +
+    '<div class="plan-card-top">'+
+    '<div class="chk">'+(checked?'✓':'')+'</div>'+
+    '<span style="font-size:15px;font-weight:600;flex:1">'+name+'</span>'+
+    '<span class="badge type-badge-'+type+'">'+type+'</span>'+
+    (dirHot?'<span class="badge b-green">本月热门</span>':'')+
+    (noOrder?'<span class="badge b-red">近3次未出单</span>':'')+
+    '<span class="badge '+(roi>=2?'b-green':roi>=1?'b-blue':'b-red')+'">ROI '+roi.toFixed(2)+'</span>'+
+    '</div>'+
+    '<div class="plan-metrics">'+
+    '<div class="pm"><div class="pm-val">¥'+(budget?budget.toLocaleString():'-')+'</div><div class="pm-label">建议投放</div></div>'+
+    '<div class="pm"><div class="pm-val">'+(leads||'-')+'</div><div class="pm-label">预计进线</div></div>'+
+    '<div class="pm"><div class="pm-val">'+(rate*100).toFixed(0)+'%</div><div class="pm-label">出单率</div></div>'+
+    '<div class="pm"><div class="pm-val">'+(days<999?days+'天':'-')+'</div><div class="pm-label">距上次</div></div>'+
+    '<div class="pm"><div class="pm-val">'+(a['主要细分']||'-')+'</div><div class="pm-label">细分</div></div>'+
+    '</div>'+
+    (noOrder?'<div class="warn-row warn-no-order" style="margin-top:4px">⚠️ 近3次投放均未出单</div>':'')+
+    '</div>';
+}
 
-function refreshPlan(){
-  _planPage++;
-  renderPlanPage();
+function togglePlanCard(name){
+  if(_checkedSet.has(name)) _checkedSet.delete(name);
+  else _checkedSet.add(name);
+  var safeId='pc_'+name.replace(/[^a-zA-Z0-9]/g,'_');
+  var el=document.getElementById(safeId);
+  if(el){
+    el.classList.toggle('checked',_checkedSet.has(name));
+    var chk=el.querySelector('.chk');
+    if(chk) chk.textContent=_checkedSet.has(name)?'✓':'';
+  }
+  updateSummaryBar();
+}
+
+function updateSummaryBar(){
+  var totalBudget=0,totalLeads=0,count=0;
+  _checkedSet.forEach(function(name){
+    var a=AC.find(function(x){return x['账号']===name;});
+    if(a){totalBudget+=parseInt(a['建议投放金额']||0);totalLeads+=parseInt(a['平均单次进线']||0);count++;}
+  });
+  var ce=document.getElementById('sum-count'), be=document.getElementById('sum-budget'), le=document.getElementById('sum-leads');
+  if(ce) ce.textContent=count;
+  if(be) be.textContent='¥'+totalBudget.toLocaleString();
+  if(le){
+    le.textContent=totalLeads;
+    var targetLeads=parseInt(document.getElementById('p-leads').value)||0;
+    le.className='sum-val'+(targetLeads&&totalLeads>=targetLeads?' rh':targetLeads&&totalLeads<targetLeads*0.7?' warn':'');
+  }
 }
 
 function genPlan(){
-  _planPage=0;
-  const targetLeads=parseInt(document.getElementById('p-leads').value)||0;
-  const interval=parseInt(document.getElementById('p-interval').value)||0;
-  const prefs=getPrefs();
-  const mainSubs=[...document.querySelectorAll('#main-dirs .sel-main')].map(t=>t.dataset.sub);
-  const testSubs=[...document.querySelectorAll('#test-dirs .sel-test')].map(t=>t.dataset.sub);
-  const el=document.getElementById('plan-result');
+  _page=0;
+  var interval=parseInt(document.getElementById('p-interval').value)||0;
+  var budget=parseInt(document.getElementById('p-budget').value)||0;
+  var prefs={};
+  document.querySelectorAll('.pref-tag.sel').forEach(function(t){prefs[t.dataset.pref]=true;});
+  var mainSubs=[...document.querySelectorAll('#main-dirs .sel-main')].map(function(t){return t.dataset.sub;});
+  var testSubs=[...document.querySelectorAll('#test-dirs .sel-test')].map(function(t){return t.dataset.sub;});
+  var el=document.getElementById('plan-result');
+  if(mainSubs.length===0&&testSubs.length===0){el.innerHTML='<p class="empty">请先选择至少一个主投方向</p>';return;}
 
-  if(mainSubs.length===0&&testSubs.length===0){
-    el.innerHTML='<p class="empty">请先选择至少一个主投方向</p>';return;
-  }
-
-  // 筛选账号
-  function filterAc(subs,isTest){
-    return AC.filter(a=>{
+  function filterList(subs,isTest){
+    return AC.filter(function(a){
       if(!subs.includes(a['主要细分'])) return false;
       if(a['投放次数']<2) return false;
       if(interval&&(a['距今天数']||999)<interval) return false;
       if(prefs.hideNoOrder&&a['近3次未出单']==='近3次未出单') return false;
-      if(prefs.rate50&&(parseFloat(a['出单率']||0))<0.5&&!isTest) return false;
-      if(prefs.roi2&&(a['ROI']||0)<2&&!isTest) return false;
-      if(prefs.leads100&&(parseInt(a['平均单次进线']||0))<100&&!isTest) return false;
-      if(prefs.interval30){
-        const d=a['距今天数']||999;
-        if(d<30||d>40) return false;
-      }
+      if(!isTest&&prefs.rate50&&(parseFloat(a['出单率']||0))<0.5) return false;
+      if(!isTest&&prefs.roi2&&(a['ROI']||0)<2) return false;
+      if(!isTest&&prefs.leads100&&(parseInt(a['平均单次进线']||0))<100) return false;
+      if(prefs.interval30){var d=a['距今天数']||999;if(d<30||d>40) return false;}
       return true;
     });
   }
 
-  let mainList=filterAc(mainSubs,false);
-  let testList=filterAc(testSubs,true);
+  var mainList=filterList(mainSubs,false);
+  var testList=filterList(testSubs,true).filter(function(a){return !mainList.find(function(m){return m['账号']===a['账号'];});});
 
-  // 排序：转化型优先ROI，线索型优先进线量
-  mainList.sort((a,b)=>{
-    const aType=getType(a,false),bType=getType(b,false);
-    if(aType==='转化型'&&bType!=='转化型') return -1;
-    if(bType==='转化型'&&aType!=='转化型') return 1;
-    if(aType==='转化型') return (b['ROI']||0)-(a['ROI']||0);
-    return (parseInt(b['平均单次进线']||0))-(parseInt(a['平均单次进线']||0));
+  mainList.sort(function(a,b){
+    var at=getType(a,false),bt=getType(b,false);
+    if(at==='转化型'&&bt!=='转化型') return -1;
+    if(bt==='转化型'&&at!=='转化型') return 1;
+    return (b['ROI']||0)-(a['ROI']||0);
   });
-  testList.sort((a,b)=>(b['ROI']||0)-(a['ROI']||0));
+  testList.sort(function(a,b){return (b['ROI']||0)-(a['ROI']||0);});
 
-  let allList=[...mainList,...testList.filter(a=>!mainList.find(m=>m['账号']===a['账号']))];
+  var combined=[...mainList,...testList];
 
-  // 预算过滤：如果填了预算，只保留建议投放金额<=预算/3的账号，并按预算+1w控制总量
-  const budget=parseInt(document.getElementById('p-budget').value)||0;
+  // 预算控制
   if(budget>0){
-    const maxBudget=budget+10000;
-    let cumBudget=0;
-    const budgetFiltered=[];
-    for(const a of allList){
-      const spend=parseInt(a['建议投放金额']||0);
-      if(cumBudget+spend<=maxBudget){
-        budgetFiltered.push(a);
-        cumBudget+=spend;
-      }
-      if(budgetFiltered.length>=50) break;
+    var maxBudget=budget+10000, cum=0, filtered=[];
+    for(var i=0;i<combined.length;i++){
+      var spend=parseInt(combined[i]['建议投放金额']||0);
+      if(cum+spend<=maxBudget){filtered.push(combined[i]);cum+=spend;}
+      if(filtered.length>=60) break;
     }
-    if(budgetFiltered.length>0) allList=budgetFiltered;
+    if(filtered.length>0) combined=filtered;
   }
 
-  if(!allList.length){
-    el.innerHTML='<p class="empty">没有符合条件的账号，请调整筛选条件</p>';return;
-  }
+  if(!combined.length){el.innerHTML='<p class="empty">没有符合条件的账号，请调整筛选条件</p>';return;}
 
-  // 渲染
-  const checkedSet=new Set();
-
-  function updateSummary(){
-    let totalBudget=0,totalLeads=0,count=0;
-    checkedSet.forEach(name=>{
-      const a=AC.find(x=>x['账号']===name);
-      if(a){totalBudget+=parseInt(a['建议投放金额']||0);totalLeads+=parseInt(a['平均单次进线']||0);count++;}
-    });
-    document.getElementById('sum-count').textContent=count;
-    document.getElementById('sum-budget').textContent='¥'+totalBudget.toLocaleString();
-    document.getElementById('sum-leads').textContent=totalLeads;
-    document.getElementById('sum-leads').className='sum-val'+(targetLeads&&totalLeads>=targetLeads?' rh':targetLeads&&totalLeads<targetLeads*0.7?' warn':'');
-  }
-
-  function renderPlanCard(a,isTest){
-    const roi=a['ROI']||0,rate=parseFloat(a['出单率']||0);
-    const days=a['距今天数']||999,budget=parseInt(a['建议投放金额']||0);
-    const leads=parseInt(a['平均单次进线']||0),noOrder=a['近3次未出单']==='近3次未出单';
-    const type=getType(a,isTest);
-    const name=a['账号'];
-    const isChecked=checkedSet.has(name);
-    const dirInfo=DIR.find(d=>d['细分']===a['主要细分']);
-    const dirROI=dirInfo?dirInfo['ROI']:null;
-    const dirHot=dirInfo&&dirInfo['总GMV']>0;
-    return`<div class="plan-card${isChecked?' checked':''}" id="pc-${name.replace(/[^a-zA-Z0-9]/g,'_')}" onclick="toggleCard('${name.replace(/'/g,"\\'")}')">
-      <div class="plan-card-top">
-        <div class="chk">${isChecked?'✓':''}</div>
-        <span style="font-size:15px;font-weight:600;flex:1">${name}</span>
-        <span class="badge type-badge-${type}">${type}</span>
-        ${dirHot?'<span class="badge b-green">本月热门</span>':''}
-        ${noOrder?'<span class="badge b-red">近3次未出单</span>':''}
-        <span class="badge ${roi>=2?'b-green':roi>=1?'b-blue':'b-red'}">ROI ${roi.toFixed(2)}</span>
-      </div>
-      <div class="plan-metrics">
-        <div class="pm"><div class="pm-val">¥${budget?budget.toLocaleString():'-'}</div><div class="pm-label">建议投放</div></div>
-        <div class="pm"><div class="pm-val">${leads||'-'}</div><div class="pm-label">预计进线</div></div>
-        <div class="pm"><div class="pm-val">${(rate*100).toFixed(0)}%</div><div class="pm-label">出单率</div></div>
-        <div class="pm"><div class="pm-val">${days<999?days+'天':'-'}</div><div class="pm-label">距上次</div></div>
-        <div class="pm"><div class="pm-val">${a['主要细分']||'-'}</div><div class="pm-label">细分</div></div>
-      </div>
-      ${noOrder?'<div class="warn-row warn-no-order" style="margin-top:4px">⚠️ 近3次投放均未出单</div>':''}
-    </div>`;
-  }
-
-  _planPool=allList;
-  window._planList=allList;
+  _pool=combined;
   window._testSubs=testSubs;
-  document.getElementById('refresh-btn').style.display=_planPool.length>_planPageSize?'':'none';
+  document.getElementById('refresh-btn').style.display=_pool.length>30?'inline-block':'none';
   renderPlanPage();
 }
 
+function refreshPlan(){_page++;renderPlanPage();}
+
 function renderPlanPage(){
-  const el=document.getElementById('plan-result');
-  const allList=_planPool;
-  if(!allList.length){el.innerHTML='<p class="empty">没有符合条件的账号</p>';return;}
-  const testSubs=window._testSubs||[];
-  const convList=allList.filter(a=>getType(a,false)==='转化型');
-  const leadsList=allList.filter(a=>getType(a,false)==='线索型');
-  const testList2=allList.filter(a=>getType(a,true)==='测试型'||testSubs.includes(a['主要细分']));
-  const checkedSet=window._checkedSet||(window._checkedSet=new Set());
-  const targetLeads=parseInt(document.getElementById('p-leads').value)||0;
-  const budget=parseInt(document.getElementById('p-budget').value)||0;
+  var el=document.getElementById('plan-result');
+  if(!_pool.length){el.innerHTML='<p class="empty">没有符合条件的账号</p>';return;}
+  var testSubs=window._testSubs||[];
+  var pageSize=30, total=_pool.length;
+  var start=(_page*pageSize)%total;
+  var items=[];
+  for(var i=0;i<pageSize&&i<total;i++) items.push(_pool[(start+i)%total]);
 
-  // 分页：每页30个，循环展示
-  const pageStart=(_planPage*_planPageSize)%allList.length;
-  const pageItems=[];
-  for(let i=0;i<_planPageSize&&i<allList.length;i++){
-    pageItems.push(allList[(pageStart+i)%allList.length]);
-  }
-  const pageConv=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='转化型');
-  const pageLeads=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='线索型');
-  const pageTest=pageItems.filter(a=>testSubs.includes(a['主要细分'])&&!pageConv.includes(a)&&!pageLeads.includes(a));
+  var conv=items.filter(function(a){return getType(a,testSubs.includes(a['主要细分']))==='转化型';});
+  var ldrs=items.filter(function(a){return getType(a,testSubs.includes(a['主要细分']))==='线索型'&&!testSubs.includes(a['主要细分']);});
+  var test=items.filter(function(a){return testSubs.includes(a['主要细分']);});
 
-  let html=`<div class="summary-bar">
-    <div class="sum-item"><div class="sum-val" id="sum-count">0</div><div class="sum-label">已选账号</div></div>
-    <div class="sum-item"><div class="sum-val" id="sum-budget">¥0</div><div class="sum-label">预计总投放</div></div>
-    <div class="sum-item"><div class="sum-val" id="sum-leads">0</div><div class="sum-label">预计进线${targetLeads?'(目标'+targetLeads+')'  :''}</div></div>
-    <button class="export-btn" onclick="exportCSV()">导出已选清单</button>
-  </div>
-  <p class="count-tip">共 ${allList.length} 个备选账号${budget>0?' · 预算¥'+budget.toLocaleString():''}（转化型${pageConv.length}个 / 线索型${pageLeads.length}个 / 测试型${pageTest.length}个）· 点击卡片选中，可换一批</p>`;
+  var budget=parseInt(document.getElementById('p-budget').value)||0;
+  var targetLeads=parseInt(document.getElementById('p-leads').value)||0;
 
-  if(pageConv.length){html+=`<div class="group-title">🎯 转化型（${pageConv.length}个）</div>`+pageConv.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
-  if(pageLeads.length){html+=`<div class="group-title">📊 线索型（${pageLeads.length}个）</div>`+pageLeads.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
-  if(pageTest.length){html+=`<div class="group-title">🔬 测试型（${pageTest.length}个）</div>`+pageTest.map(a=>renderPlanCard(a,true)).join('');}
+  var html='<div class="summary-bar">'+
+    '<div class="sum-item"><div class="sum-val" id="sum-count">0</div><div class="sum-label">已选账号</div></div>'+
+    '<div class="sum-item"><div class="sum-val" id="sum-budget">¥0</div><div class="sum-label">预计总投放</div></div>'+
+    '<div class="sum-item"><div class="sum-val" id="sum-leads">0</div><div class="sum-label">预计进线'+(targetLeads?'(目标'+targetLeads+')':'')+'</div></div>'+
+    '<button class="export-btn" onclick="exportCSV()">导出已选清单</button>'+
+    '</div>'+
+    '<p class="count-tip">共 '+total+' 个备选'+(budget>0?' · 预算¥'+budget.toLocaleString():'')+' · 转化型'+conv.length+'个 / 线索型'+ldrs.length+'个 / 测试型'+test.length+'个 · 点击卡片选中</p>';
+
+  if(conv.length) html+='<div class="group-title">🎯 转化型（'+conv.length+'个）</div>'+conv.map(function(a){return renderPlanCard(a,false);}).join('');
+  if(ldrs.length) html+='<div class="group-title">📊 线索型（'+ldrs.length+'个）</div>'+ldrs.map(function(a){return renderPlanCard(a,false);}).join('');
+  if(test.length) html+='<div class="group-title">🔬 测试型（'+test.length+'个）</div>'+test.map(function(a){return renderPlanCard(a,true);}).join('');
 
   el.innerHTML=html;
-}
-
-function toggleCard(name){
-  const set=window._checkedSet||(window._checkedSet=new Set());
-  const el=document.getElementById('pc-'+name.replace(/[^a-zA-Z0-9]/g,'_'));
-  if(set.has(name)){set.delete(name);el&&el.classList.remove('checked');el&&(el.querySelector('.chk').textContent='');}
-  else{set.add(name);el&&el.classList.add('checked');el&&(el.querySelector('.chk').textContent='✓');}
-  // 更新汇总
-  const targetLeads=parseInt(document.getElementById('p-leads').value)||0;
-  let totalBudget=0,totalLeads=0,count=0;
-  set.forEach(n=>{
-    const a=AC.find(x=>x['账号']===n);
-    if(a){totalBudget+=parseInt(a['建议投放金额']||0);totalLeads+=parseInt(a['平均单次进线']||0);count++;}
-  });
-  document.getElementById('sum-count').textContent=count;
-  document.getElementById('sum-budget').textContent='¥'+totalBudget.toLocaleString();
-  const leadsEl=document.getElementById('sum-leads');
-  leadsEl.textContent=totalLeads;
-  leadsEl.className='sum-val'+(targetLeads&&totalLeads>=targetLeads?' rh':targetLeads&&totalLeads<targetLeads*0.7?' warn':'');
+  updateSummaryBar();
 }
 
 function exportCSV(){
-  const set=window._checkedSet;
-  if(!set||set.size===0){alert('请先勾选账号');return;}
-  const rows=[['账号','类型','建议投放','预计进线','出单率','历史ROI','细分','距上次投放(天)','最近投放日期']];
-  set.forEach(name=>{
-    const a=AC.find(x=>x['账号']===name);
-    if(a){
-      const isTest=window._testSubs&&window._testSubs.includes(a['主要细分']);
-      rows.push([a['账号'],getType(a,isTest),a['建议投放金额']||0,a['平均单次进线']||0,((parseFloat(a['出单率']||0))*100).toFixed(0)+'%',(a['ROI']||0).toFixed(2),a['主要细分']||'',a['距今天数']<999?a['距今天数']:'',a['最近投放日期']||'']);
-    }
+  if(!_checkedSet.size){alert('请先勾选账号');return;}
+  var rows=[['账号','类型','建议投放','预计进线','出单率','历史ROI','细分','距上次(天)','最近投放日期']];
+  var testSubs=window._testSubs||[];
+  _checkedSet.forEach(function(name){
+    var a=AC.find(function(x){return x['账号']===name;});
+    if(a) rows.push([a['账号'],getType(a,testSubs.includes(a['主要细分'])),a['建议投放金额']||0,a['平均单次进线']||0,((parseFloat(a['出单率']||0))*100).toFixed(0)+'%',(a['ROI']||0).toFixed(2),a['主要细分']||'',a['距今天数']<999?a['距今天数']:'',a['最近投放日期']||'']);
   });
-  const csv='\uFEFF'+rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const link=document.createElement('a');link.href=url;link.download='班次选号清单.csv';link.click();
+  var csv='\uFEFF'+rows.map(function(r){return r.map(function(v){return '"'+v+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var link=document.createElement('a');link.href=url;link.download='班次选号清单.csv';link.click();
 }
 
-// 账号查询
-function onInput(){
-  const val=document.getElementById('qi').value.trim(),box=document.getElementById('qs');
-  if(!val){box.innerHTML='';return;}
-  box.innerHTML=AC.filter(a=>a['账号'].includes(val)).slice(0,8).map(a=>`<span class="sug-tag" onclick="pick('${a['账号'].replace(/'/g,"\\'")}')">${a['账号']}</span>`).join('');
-}
-function pick(name){document.getElementById('qi').value=name;document.getElementById('qs').innerHTML='';doSearch();}
-
-function getDirTip(a){
-  const sub=a['主要细分'],crowd=a['主要人群'];
-  const di=DIR.find(d=>d['细分']===sub)||DIR.find(d=>d['人群']===crowd);
-  if(!di||di['总消耗']===0)return{tip:'',dirROI:null};
-  const label=DIR.find(d=>d['细分']===sub)?`本月【${sub}】细分`:`本月【${crowd}】方向`;
-  if(di['总GMV']>0) return{tip:`<div class="dir-ok">${label}：消耗¥${Math.round(di['总消耗']).toLocaleString()} / GMV¥${Math.round(di['总GMV']).toLocaleString()} / ROI ${di['ROI'].toFixed(2)}</div>`,dirROI:di['ROI']};
-  return{tip:`<div class="dir-warn">⚠️ ${label}：消耗¥${Math.round(di['总消耗']).toLocaleString()} 但本月GMV为0</div>`,dirROI:0};
-}
-
-function verdict(a,dirROI){
-  const roi=a['ROI']||0,rate=parseFloat(a['出单率'])||0,n=a['投放次数']||0,noOrder=a['近3次未出单']==='近3次未出单';
-  if(dirROI!==null&&dirROI<1)return{t:'方向本月跑不动，谨慎',c:'v-caution'};
-  if(noOrder&&roi>=1)return{t:'历史ROI好但近3次未出单，谨慎复投',c:'v-caution'};
-  if(noOrder)return{t:'近3次未出单，不建议',c:'v-no'};
-  if(roi>=2&&rate>=0.5&&n>=3)return{t:'强烈推荐复投',c:'v-yes'};
-  if(roi>=1&&rate>=0.3&&n>=2)return{t:'建议复投',c:'v-yes'};
-  if(roi>=1&&a['出单次数']>0)return{t:'可小额测试',c:'v-caution'};
-  if(a['出单次数']>0)return{t:'谨慎，ROI不足1',c:'v-caution'};
-  return{t:'不建议，从未出单',c:'v-no'};
-}
-
-function iBadge(d){
-  if(d>=999)return'<span class="badge b-gray">未投放</span>';
-  if(d<=14)return'<span class="badge b-orange">'+d+'天前·建议间隔</span>';
-  if(d<=30)return'<span class="badge b-blue">'+d+'天前</span>';
-  return'<span class="badge b-green">'+d+'天前·可复投</span>';
-}
-
-function card(a,dirROI){
-  const roi=a['ROI']||0,rate=parseFloat(a['出单率']||0),v=verdict(a,dirROI),days=a['距今天数']||999;
-  const cost=parseFloat(a['历史线索成本']||0),leads=parseInt(a['总线索量']||0),costNote=a['成本标注']||'',noOrder=a['近3次未出单']==='近3次未出单';
-  let warns='';
-  if(noOrder)warns+=`<div class="warn-row warn-no-order">⚠️ 近3次投放均未出单</div>`;
-  if(costNote)warns+=`<div class="warn-row warn-cost">📊 ${costNote}</div>`;
-  return`<div class="card">
-    <div class="card-top"><span class="account-name">${a['账号']}</span>
-    <div class="badges">${iBadge(days)}<span class="badge ${roi>=2?'b-green':roi>=1?'b-blue':'b-red'}">ROI ${roi.toFixed(2)}</span>${noOrder?'<span class="badge b-red">近3次未出单</span>':''}</div></div>
-    <div class="metrics">
-      <div class="metric"><div class="metric-val">${(rate*100).toFixed(0)}%</div><div class="metric-label">出单率</div></div>
-      <div class="metric"><div class="metric-val">${a['投放次数']}</div><div class="metric-label">投放次数</div></div>
-      <div class="metric"><div class="metric-val">${roi.toFixed(2)}</div><div class="metric-label">历史ROI</div></div>
-      <div class="metric"><div class="metric-val">¥${a['总GMV']?Math.round(a['总GMV']).toLocaleString():'-'}</div><div class="metric-label">历史总GMV</div></div>
-    </div>
-    <div class="info-rows">
-      <div class="info-row">
-        <div class="info-item"><span class="ik">人群</span><span class="iv">${a['主要人群']||'-'}</span></div>
-        <div class="info-item"><span class="ik">细分</span><span class="iv">${a['主要细分']||'-'}</span></div>
-        <div class="info-item"><span class="ik">最近投放</span><span class="iv">${a['最近投放日期']||'无'}</span></div>
-      </div>
-      <div class="info-row">
-        <div class="info-item"><span class="ik">历史进线</span><span class="iv">${leads?leads+'条':'-'}</span></div>
-        <div class="info-item"><span class="ik">历史线索成本</span><span class="${cost>120?'iv-red':'iv'}">${cost?'¥'+cost.toFixed(1):'-'}</span></div>
-        <div class="info-item"><span class="ik">最近3次GMV</span><span class="iv">${a['最近3次GMV']||'-'}</span></div>
-      </div>
-    </div>${warns}
-    <div class="verdict ${v.c}">${v.t}</div>
-  </div>`;
-}
-
-function doSearch(){
-  const val=document.getElementById('qi').value.trim(),el=document.getElementById('qr');
-  if(!val){el.innerHTML='<p class="empty">请输入账号名称</p>';return;}
-  const hits=AC.filter(a=>a['账号'].includes(val));
-  if(!hits.length){el.innerHTML='<p class="empty">未找到账号</p>';return;}
-  el.innerHTML=`<p class="count-tip">找到 ${hits.length} 个相关账号</p>`+hits.slice(0,10).map(a=>{const{tip,dirROI}=getDirTip(a);return tip+card(a,dirROI);}).join('');
-}
-
-function doRec(){
-  const crowd=document.getElementById('fc').value,sort=document.getElementById('fs').value;
-  const interval=parseInt(document.getElementById('fi').value)||0,hideNo=document.getElementById('fno').value==='1';
-  const el=document.getElementById('rr');
-  let tip='';
-  if(crowd){const di=DIR.find(d=>d['人群']===crowd);
-    if(di&&di['ROI']<1&&di['总消耗']>0)tip=`<div class="dir-warn">⚠️ ${crowd} 本月ROI ${di['ROI'].toFixed(2)}，跑不动</div>`;
-    else if(di&&di['总GMV']>0)tip=`<div class="dir-ok">✓ ${crowd} 本月ROI ${di['ROI'].toFixed(2)}，方向良好</div>`;}
-  let list=AC.filter(a=>{
-    if(a['出单次数']<=0||(a['ROI']||0)<1||a['投放次数']<2)return false;
-    if(crowd&&a['主要人群']!==crowd)return false;
-    if(interval&&(a['距今天数']||0)<interval)return false;
-    if(hideNo&&a['近3次未出单']==='近3次未出单')return false;
-    return true;
-  });
-  if(sort==='roi')list.sort((a,b)=>(b['ROI']||0)-(a['ROI']||0));
-  else if(sort==='gmv')list.sort((a,b)=>(b['总GMV']||0)-(a['总GMV']||0));
-  else if(sort==='rate')list.sort((a,b)=>(parseFloat(b['出单率'])||0)-(parseFloat(a['出单率'])||0));
-  else list.sort((a,b)=>(a['距今天数']||999)-(b['距今天数']||999));
-  const dirROI=crowd?((DIR.find(d=>d['人群']===crowd)||{})['ROI']||null):null;
-  el.innerHTML=tip+(list.length?`<p class="count-tip">共 ${list.length} 个符合条件，显示前30个</p>`+list.slice(0,30).map(a=>card(a,dirROI)).join(''):'<p class="empty">没有符合条件的账号</p>');
-}
-
+// ===== 本月方向热度 =====
 function doDir(){
-  const el=document.getElementById('dr');
-  const active=DIR.filter(d=>d['总GMV']>0).sort((a,b)=>b['ROI']-a['ROI']);
-  const inactive=DIR.filter(d=>d['总消耗']>0&&d['总GMV']===0);
-  let h=`<table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>投放次数</th><th>总消耗</th><th>总GMV</th><th>ROI</th></tr></thead><tbody>`;
-  active.forEach(d=>{h+=`<tr><td>${d['人群']}</td><td>${d['细分']}</td><td>${d['投放次数']}</td><td>¥${Math.round(d['总消耗']).toLocaleString()}</td><td>¥${Math.round(d['总GMV']).toLocaleString()}</td><td class="${rC(d['ROI'])}">${d['ROI'].toFixed(2)}</td></tr>`;});
+  var el=document.getElementById('dr');
+  var active=DIR.filter(function(d){return d['总GMV']>0;}).sort(function(a,b){return b['ROI']-a['ROI'];});
+  var inactive=DIR.filter(function(d){return d['总消耗']>0&&d['总GMV']===0;});
+  var h='<table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>投放次数</th><th>总消耗</th><th>总GMV</th><th>ROI</th></tr></thead><tbody>';
+  active.forEach(function(d){h+='<tr><td>'+d['人群']+'</td><td>'+d['细分']+'</td><td>'+d['投放次数']+'</td><td>¥'+Math.round(d['总消耗']).toLocaleString()+'</td><td>¥'+Math.round(d['总GMV']).toLocaleString()+'</td><td class="'+rC(d['ROI'])+'">'+d['ROI'].toFixed(2)+'</td></tr>';});
   h+='</tbody></table>';
   if(inactive.length){
-    h+=`<p class="sec-title" style="margin-top:8px">有消耗但未出单的方向</p><table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>消耗</th><th>GMV</th></tr></thead><tbody>`;
-    inactive.forEach(d=>{h+=`<tr><td>${d['人群']}</td><td>${d['细分']}</td><td>¥${Math.round(d['总消耗']).toLocaleString()}</td><td class="rl">0</td></tr>`;});
+    h+='<p class="sec-title" style="margin-top:8px">有消耗但未出单的方向</p><table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>消耗</th><th>GMV</th></tr></thead><tbody>';
+    inactive.forEach(function(d){h+='<tr><td>'+d['人群']+'</td><td>'+d['细分']+'</td><td>¥'+Math.round(d['总消耗']).toLocaleString()+'</td><td class="rl">0</td></tr>';});
     h+='</tbody></table>';
   }
   el.innerHTML=h;
 }
 
+// ===== tab切换 =====
 function go(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['query','recommend','plan','direction'][i]===t));
-  document.querySelectorAll('.panel').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(function(el,i){el.classList.toggle('active',['query','recommend','plan','direction'][i]===t);});
+  document.querySelectorAll('.panel').forEach(function(el){el.classList.remove('active');});
   document.getElementById('panel-'+t).classList.add('active');
-  if(t==='recommend')doRec();
-  if(t==='direction')doDir();
+  if(t==='recommend') doRec();
+  if(t==='direction') doDir();
 }
-function rC(r){return r>=2?'rh':r>=1?'rm':'rl';}
 </script>
 </body>
 </html>
