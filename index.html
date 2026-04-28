@@ -414,19 +414,6 @@ function genPlan(){
     </div>`;
   }
 
-  let html=`<div class="summary-bar">
-    <div class="sum-item"><div class="sum-val" id="sum-count">0</div><div class="sum-label">已选账号</div></div>
-    <div class="sum-item"><div class="sum-val" id="sum-budget">¥0</div><div class="sum-label">预计总投放</div></div>
-    <div class="sum-item"><div class="sum-val" id="sum-leads">0</div><div class="sum-label">预计进线${targetLeads?'(目标'+targetLeads+')'  :''}</div></div>
-    <button class="export-btn" onclick="exportCSV()">导出已选清单</button>
-  </div>
-  <p class="count-tip">共 ${allList.length} 个备选账号${budget>0?' · 预算¥'+budget.toLocaleString():''}（转化型${pageConv.length}个 / 线索型${pageLeads.length}个 / 测试型${pageTest.length}个）· 点击卡片选中，可换一批</p>`;
-
-  if(pageConv.length){html+=`<div class="group-title">🎯 转化型（${pageConv.length}个）</div>`+pageConv.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
-  if(pageLeads.length){html+=`<div class="group-title">📊 线索型（${pageLeads.length}个）</div>`+pageLeads.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
-  if(pageTest.length){html+=`<div class="group-title">🔬 测试型（${pageTest.length}个）</div>`+pageTest.map(a=>renderPlanCard(a,true)).join('');}
-
-  el.innerHTML=html;
   _planPool=allList;
   window._planList=allList;
   window._testSubs=testSubs;
@@ -455,6 +442,20 @@ function renderPlanPage(){
   const pageConv=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='转化型');
   const pageLeads=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='线索型');
   const pageTest=pageItems.filter(a=>testSubs.includes(a['主要细分'])&&!pageConv.includes(a)&&!pageLeads.includes(a));
+
+  let html=`<div class="summary-bar">
+    <div class="sum-item"><div class="sum-val" id="sum-count">0</div><div class="sum-label">已选账号</div></div>
+    <div class="sum-item"><div class="sum-val" id="sum-budget">¥0</div><div class="sum-label">预计总投放</div></div>
+    <div class="sum-item"><div class="sum-val" id="sum-leads">0</div><div class="sum-label">预计进线${targetLeads?'(目标'+targetLeads+')'  :''}</div></div>
+    <button class="export-btn" onclick="exportCSV()">导出已选清单</button>
+  </div>
+  <p class="count-tip">共 ${allList.length} 个备选账号${budget>0?' · 预算¥'+budget.toLocaleString():''}（转化型${pageConv.length}个 / 线索型${pageLeads.length}个 / 测试型${pageTest.length}个）· 点击卡片选中，可换一批</p>`;
+
+  if(pageConv.length){html+=`<div class="group-title">🎯 转化型（${pageConv.length}个）</div>`+pageConv.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
+  if(pageLeads.length){html+=`<div class="group-title">📊 线索型（${pageLeads.length}个）</div>`+pageLeads.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
+  if(pageTest.length){html+=`<div class="group-title">🔬 测试型（${pageTest.length}个）</div>`+pageTest.map(a=>renderPlanCard(a,true)).join('');}
+
+  el.innerHTML=html;
 }
 
 function toggleCard(name){
