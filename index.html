@@ -105,8 +105,8 @@ header h1{font-size:16px;font-weight:600}header span{font-size:12px;color:#999}
 @media(max-width:600px){.metrics,.plan-metrics{grid-template-columns:repeat(2,1fr)}.card-top{flex-direction:column}.badges{justify-content:flex-start}.sum-item{padding:0 10px}}
 </style>
 </head>
-<body>
-<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f5f5f5;z-index:9999;display:flex;align-items:center;justify-content:center">
+<body style="overflow:hidden">
+<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center;min-height:100vh">
   <div style="background:#fff;border-radius:12px;padding:40px 36px;width:320px;box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center">
     <div style="font-size:28px;margin-bottom:8px">🔒</div>
     <div style="font-size:18px;font-weight:600;margin-bottom:4px">图文投放选号工具</div>
@@ -126,6 +126,7 @@ function checkPwd(){
   const val=document.getElementById('auth-input').value;
   if(val==='pinzhi8866'){
     document.getElementById('auth-mask').style.display='none';
+    document.body.style.overflow='';
     localStorage.setItem('xuanhao_auth','1');
   } else {
     document.getElementById('auth-err').textContent='密码错误，请重试';
@@ -136,6 +137,7 @@ function checkPwd(){
 window.addEventListener('DOMContentLoaded',function(){
   if(localStorage.getItem('xuanhao_auth')==='1'){
     document.getElementById('auth-mask').style.display='none';
+    document.body.style.overflow='';
   } else {
     setTimeout(function(){document.getElementById('auth-input').focus();},100);
   }
@@ -143,7 +145,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </script>
 
 <!-- 密码验证层 -->
-<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f5f5f5;z-index:9999;display:flex;align-items:center;justify-content:center">
+<div id="auth-mask" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center;min-height:100vh">
   <div style="background:#fff;border-radius:12px;padding:40px 36px;width:320px;box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center">
     <div style="font-size:28px;margin-bottom:8px">🔒</div>
     <div style="font-size:18px;font-weight:600;margin-bottom:4px">图文投放选号工具</div>
