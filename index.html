@@ -151,8 +151,26 @@ function iBadge(d){
   return'<span class="badge b-green">'+d+'天前·可复投</span>';
 }
 
+function getDirTip(a){
+  // 优先按细分匹配，找不到再按人群
+  const sub=a['主要细分'],crowd=a['主要人群'];
+  const bySubDiv=DIR.find(d=>d['细分']===sub);
+  const byCrowd=DIR.find(d=>d['人群']===crowd);
+  const di=bySubDiv||byCrowd;
+  if(!di||di['总消耗']===0) return {tip:'',dirROI:null};
+  const label=bySubDiv?`本月【${sub}】细分`:`本月【${crowd}】方向`;
+  let tip='',dirROI=di['ROI'];
+  if(di['总GMV']>0){
+    tip=`<div class="dir-ok">${label}：消耗¥${Math.round(di['总消耗']).toLocaleString()} / GMV¥${Math.round(di['总GMV']).toLocaleString()} / ROI ${di['ROI'].toFixed(2)}</div>`;
+  } else {
+    tip=`<div class="dir-warn">⚠️ ${label}：消耗¥${Math.round(di['总消耗']).toLocaleString()} 但本月GMV为0</div>`;
+    dirROI=0;
+  }
+  return {tip,dirROI};
+}
+
 function card(a,dirROI){
-  const roi=a['ROI']||0,rate=parseFloat(a['出单率']||0),avgGMV=parseFloat(a['平均出单GMV']||0);
+  const roi=a['ROI']||0,rate=parseFloat(a['出单率']||0);
   const v=verdict(a,dirROI),days=a['距今天数']||999;
   const cost=parseFloat(a['历史线索成本']||0),leads=parseInt(a['总线索量']||0);
   const costNote=a['成本标注']||'',noOrder=a['近3次未出单']==='近3次未出单';
@@ -171,7 +189,7 @@ function card(a,dirROI){
     <div class="metrics">
       <div class="metric"><div class="metric-val">${(rate*100).toFixed(0)}%</div><div class="metric-label">出单率</div></div>
       <div class="metric"><div class="metric-val">${a['投放次数']}</div><div class="metric-label">投放次数</div></div>
-      <div class="metric"><div class="metric-val">¥${avgGMV?Math.round(avgGMV).toLocaleString():'-'}</div><div class="metric-label">平均出单GMV</div></div>
+      <div class="metric"><div class="metric-val">${roi.toFixed(2)}</div><div class="metric-label">历史ROI</div></div>
       <div class="metric"><div class="metric-val">¥${a['总GMV']?Math.round(a['总GMV']).toLocaleString():'-'}</div><div class="metric-label">历史总GMV</div></div>
     </div>
     <div class="info-rows">
@@ -205,10 +223,7 @@ function doSearch(){
   const hits=AC.filter(a=>a['账号'].includes(val));
   if(!hits.length){el.innerHTML='<p class="empty">未找到账号</p>';return;}
   el.innerHTML=`<p class="count-tip">找到 ${hits.length} 个相关账号</p>`+hits.slice(0,10).map(a=>{
-    const crowd=a['主要人群'],di=DIR.find(d=>d['人群']===crowd),dirROI=di?di['ROI']:null;
-    let tip='';
-    if(di&&di['总GMV']>0)tip=`<div class="dir-ok">本月 ${crowd}：消耗¥${Math.round(di['总消耗']).toLocaleString()} / GMV¥${Math.round(di['总GMV']).toLocaleString()} / ROI ${di['ROI'].toFixed(2)}</div>`;
-    else if(di&&di['总消耗']>0)tip=`<div class="dir-warn">⚠️ 本月 ${crowd} 消耗¥${Math.round(di['总消耗']).toLocaleString()} 但GMV为0</div>`;
+    const {tip,dirROI}=getDirTip(a);
     return tip+card(a,dirROI);
   }).join('');
 }
@@ -224,7 +239,7 @@ function doRec(){
     else if(di&&di['总GMV']>0)tip=`<div class="dir-ok">✓ ${crowd} 本月ROI ${di['ROI'].toFixed(2)}，方向良好</div>`;
   }
   let list=AC.filter(a=>{
-    if(a['出单次数']<=0||( a['ROI']||0)<1||a['投放次数']<2)return false;
+    if(a['出单次数']<=0||(a['ROI']||0)<1||a['投放次数']<2)return false;
     if(crowd&&a['主要人群']!==crowd)return false;
     if(interval&&(a['距今天数']||0)<interval)return false;
     if(hideNo&&a['近3次未出单']==='近3次未出单')return false;
