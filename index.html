@@ -160,6 +160,10 @@ window.addEventListener('DOMContentLoaded',function(){
     <h3>填写班次信息</h3>
     <div class="form-row">
       <div class="form-group">
+        <label>总预算（元）</label>
+        <input type="number" id="p-budget" placeholder="如：45000" min="0">
+      </div>
+      <div class="form-group">
         <label>目标线索量（条）</label>
         <input type="number" id="p-leads" placeholder="如：200" min="0">
       </div>
@@ -192,7 +196,7 @@ window.addEventListener('DOMContentLoaded',function(){
         <span class="pref-tag" data-pref="roi2">优先ROI>2</span>
       </div>
     </div>
-    <button class="plan-btn" onclick="genPlan()">生成备选池</button>
+    <button class="plan-btn" onclick="genPlan()">生成备选池</button> <button class="plan-btn" id="refresh-btn" onclick="refreshPlan()" style="background:#fff;color:#1677ff;border:1px solid #1677ff;margin-left:8px;display:none">🔄 换一批</button>
   </div>
   <div id="plan-result"></div>
 </div>
@@ -291,7 +295,15 @@ function getType(a,isTest){
   return '线索型';
 }
 
+let _planPool=[], _planPage=0, _planPageSize=30;
+
+function refreshPlan(){
+  _planPage++;
+  renderPlanPage();
+}
+
 function genPlan(){
+  _planPage=0;
   const targetLeads=parseInt(document.getElementById('p-leads').value)||0;
   const interval=parseInt(document.getElementById('p-interval').value)||0;
   const prefs=getPrefs();
@@ -334,7 +346,24 @@ function genPlan(){
   });
   testList.sort((a,b)=>(b['ROI']||0)-(a['ROI']||0));
 
-  const allList=[...mainList,...testList.filter(a=>!mainList.find(m=>m['账号']===a['账号']))];
+  let allList=[...mainList,...testList.filter(a=>!mainList.find(m=>m['账号']===a['账号']))];
+
+  // 预算过滤：如果填了预算，只保留建议投放金额<=预算/3的账号，并按预算+1w控制总量
+  const budget=parseInt(document.getElementById('p-budget').value)||0;
+  if(budget>0){
+    const maxBudget=budget+10000;
+    let cumBudget=0;
+    const budgetFiltered=[];
+    for(const a of allList){
+      const spend=parseInt(a['建议投放金额']||0);
+      if(cumBudget+spend<=maxBudget){
+        budgetFiltered.push(a);
+        cumBudget+=spend;
+      }
+      if(budgetFiltered.length>=50) break;
+    }
+    if(budgetFiltered.length>0) allList=budgetFiltered;
+  }
 
   if(!allList.length){
     el.innerHTML='<p class="empty">没有符合条件的账号，请调整筛选条件</p>';return;
@@ -385,24 +414,47 @@ function genPlan(){
     </div>`;
   }
 
-  const convList=mainList.filter(a=>getType(a,false)==='转化型');
-  const leadsList=mainList.filter(a=>getType(a,false)==='线索型');
-
   let html=`<div class="summary-bar">
     <div class="sum-item"><div class="sum-val" id="sum-count">0</div><div class="sum-label">已选账号</div></div>
     <div class="sum-item"><div class="sum-val" id="sum-budget">¥0</div><div class="sum-label">预计总投放</div></div>
     <div class="sum-item"><div class="sum-val" id="sum-leads">0</div><div class="sum-label">预计进线${targetLeads?'(目标'+targetLeads+')'  :''}</div></div>
     <button class="export-btn" onclick="exportCSV()">导出已选清单</button>
   </div>
-  <p class="count-tip">共 ${allList.length} 个备选账号（转化型${convList.length}个 / 线索型${leadsList.length}个 / 测试型${testList.length}个）· 点击卡片选中</p>`;
+  <p class="count-tip">共 ${allList.length} 个备选账号${budget>0?' · 预算¥'+budget.toLocaleString():''}（转化型${pageConv.length}个 / 线索型${pageLeads.length}个 / 测试型${pageTest.length}个）· 点击卡片选中，可换一批</p>`;
 
-  if(convList.length){html+=`<div class="group-title">🎯 转化型（${convList.length}个）</div>`+convList.map(a=>renderPlanCard(a,false)).join('');}
-  if(leadsList.length){html+=`<div class="group-title">📊 线索型（${leadsList.length}个）</div>`+leadsList.map(a=>renderPlanCard(a,false)).join('');}
-  if(testList.length){html+=`<div class="group-title">🔬 测试型（${testList.length}个）</div>`+testList.filter(a=>!mainList.find(m=>m['账号']===a['账号'])).map(a=>renderPlanCard(a,true)).join('');}
+  if(pageConv.length){html+=`<div class="group-title">🎯 转化型（${pageConv.length}个）</div>`+pageConv.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
+  if(pageLeads.length){html+=`<div class="group-title">📊 线索型（${pageLeads.length}个）</div>`+pageLeads.map(a=>renderPlanCard(a,testSubs.includes(a['主要细分']))).join('');}
+  if(pageTest.length){html+=`<div class="group-title">🔬 测试型（${pageTest.length}个）</div>`+pageTest.map(a=>renderPlanCard(a,true)).join('');}
 
   el.innerHTML=html;
+  _planPool=allList;
   window._planList=allList;
   window._testSubs=testSubs;
+  document.getElementById('refresh-btn').style.display=_planPool.length>_planPageSize?'':'none';
+  renderPlanPage();
+}
+
+function renderPlanPage(){
+  const el=document.getElementById('plan-result');
+  const allList=_planPool;
+  if(!allList.length){el.innerHTML='<p class="empty">没有符合条件的账号</p>';return;}
+  const testSubs=window._testSubs||[];
+  const convList=allList.filter(a=>getType(a,false)==='转化型');
+  const leadsList=allList.filter(a=>getType(a,false)==='线索型');
+  const testList2=allList.filter(a=>getType(a,true)==='测试型'||testSubs.includes(a['主要细分']));
+  const checkedSet=window._checkedSet||(window._checkedSet=new Set());
+  const targetLeads=parseInt(document.getElementById('p-leads').value)||0;
+  const budget=parseInt(document.getElementById('p-budget').value)||0;
+
+  // 分页：每页30个，循环展示
+  const pageStart=(_planPage*_planPageSize)%allList.length;
+  const pageItems=[];
+  for(let i=0;i<_planPageSize&&i<allList.length;i++){
+    pageItems.push(allList[(pageStart+i)%allList.length]);
+  }
+  const pageConv=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='转化型');
+  const pageLeads=pageItems.filter(a=>getType(a,testSubs.includes(a['主要细分']))==='线索型');
+  const pageTest=pageItems.filter(a=>testSubs.includes(a['主要细分'])&&!pageConv.includes(a)&&!pageLeads.includes(a));
 }
 
 function toggleCard(name){
