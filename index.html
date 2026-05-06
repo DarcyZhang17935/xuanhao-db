@@ -249,14 +249,14 @@ window.addEventListener('DOMContentLoaded',function(){
 
 <!-- 本月方向热度 -->
 <div id="panel-direction" class="panel">
-  <p class="sec-title">本月（2026年4月）各方向出单情况</p>
+  <p class="sec-title">本月（2026年5月）及上月（4月）方向出单情况</p>
   <div id="dr"></div>
 </div>
 
 <script src="db.js"></script>
 <script>
 // ===== 全局数据 =====
-var AC=DB.accounts, DIR=DB.directions, TODAY='2026-04-24';
+var AC=DB.accounts, DIR=DB.directions_may, DIR_APR=DB.directions_apr, TODAY='2026-05-06';
 document.getElementById('hd-info').textContent='共 '+AC.length+' 个账号 · 截至 '+TODAY;
 
 // 初始化人群筛选
@@ -265,7 +265,7 @@ var recSel=document.getElementById('fc');
 crowds.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;recSel.appendChild(o);});
 
 // 初始化班次方向标签
-var activeSubs=new Set(DIR.filter(function(d){return d['总GMV']>0;}).map(function(d){return d['细分'];}));
+var activeSubs=new Set([...DIR,...DIR_APR].filter(function(d){return d['总GMV']>0;}).map(function(d){return d['细分'];}));
 var subCount={};
 AC.forEach(function(a){if(a['出单次数']>0&&a['投放次数']>=2&&a['主要细分']){subCount[a['主要细分']]=(subCount[a['主要细分']]||0)+1;}});
 var allSubs=Object.entries(subCount).filter(function(e){return e[1]>=2;}).sort(function(a,b){return b[1]-a[1];}).map(function(e){return e[0];});
@@ -297,11 +297,20 @@ function iBadge(d){
 
 function getDirInfo(a){
   var sub=a['主要细分'], crowd=a['主要人群'];
-  var di=DIR.find(function(d){return d['细分']===sub;})||DIR.find(function(d){return d['人群']===crowd;});
-  if(!di||di['总消耗']===0) return {tip:'',dirROI:null};
-  var label=DIR.find(function(d){return d['细分']===sub;})?'本月【'+sub+'】细分':'本月【'+crowd+'】方向';
-  if(di['总GMV']>0) return {tip:'<div class="dir-ok">'+label+'：消耗¥'+Math.round(di['总消耗']).toLocaleString()+' / GMV¥'+Math.round(di['总GMV']).toLocaleString()+' / ROI '+di['ROI'].toFixed(2)+'</div>',dirROI:di['ROI']};
-  return {tip:'<div class="dir-warn">⚠️ '+label+'：消耗¥'+Math.round(di['总消耗']).toLocaleString()+' 但本月GMV为0</div>',dirROI:0};
+  // 优先5月，再找4月
+  var diMay=DIR.find(function(d){return d['细分']===sub;})||DIR.find(function(d){return d['人群']===crowd;});
+  var diApr=DIR_APR.find(function(d){return d['细分']===sub;})||DIR_APR.find(function(d){return d['人群']===crowd;});
+  var tip='', dirROI=null;
+  if(diMay&&diMay['总消耗']>0){
+    var label='5月【'+sub+'】';
+    if(diMay['总GMV']>0){tip='<div class="dir-ok">'+label+'：消耗¥'+Math.round(diMay['总消耗']).toLocaleString()+' / GMV¥'+Math.round(diMay['总GMV']).toLocaleString()+' / ROI '+diMay['ROI'].toFixed(2)+'</div>';dirROI=diMay['ROI'];}
+    else{tip='<div class="dir-warn">⚠️ '+label+'：消耗¥'+Math.round(diMay['总消耗']).toLocaleString()+' 但5月GMV为0</div>';dirROI=0;}
+  }
+  if(diApr&&diApr['总GMV']>0){
+    tip+='<div class="dir-ok" style="margin-top:4px">4月【'+sub+'】：消耗¥'+Math.round(diApr['总消耗']).toLocaleString()+' / GMV¥'+Math.round(diApr['总GMV']).toLocaleString()+' / ROI '+diApr['ROI'].toFixed(2)+'</div>';
+    if(dirROI===null) dirROI=diApr['ROI'];
+  }
+  return {tip:tip, dirROI:dirROI};
 }
 
 function getVerdict(a,dirROI){
@@ -563,18 +572,29 @@ function exportCSV(){
 }
 
 // ===== 本月方向热度 =====
-function doDir(){
-  var el=document.getElementById('dr');
-  var active=DIR.filter(function(d){return d['总GMV']>0;}).sort(function(a,b){return b['ROI']-a['ROI'];});
-  var inactive=DIR.filter(function(d){return d['总消耗']>0&&d['总GMV']===0;});
-  var h='<table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>投放次数</th><th>总消耗</th><th>总GMV</th><th>ROI</th></tr></thead><tbody>';
-  active.forEach(function(d){h+='<tr><td>'+d['人群']+'</td><td>'+d['细分']+'</td><td>'+d['投放次数']+'</td><td>¥'+Math.round(d['总消耗']).toLocaleString()+'</td><td>¥'+Math.round(d['总GMV']).toLocaleString()+'</td><td class="'+rC(d['ROI'])+'">'+d['ROI'].toFixed(2)+'</td></tr>';});
+function renderDirTable(dirs, title, showInactive){
+  var active=dirs.filter(function(d){return d['总GMV']>0;}).sort(function(a,b){return b['ROI']-a['ROI'];});
+  var inactive=dirs.filter(function(d){return d['总消耗']>0&&d['总GMV']===0;});
+  var h='<p class="sec-title" style="margin-top:12px;font-size:14px;font-weight:600;color:#1a1a1a">'+title+'</p>';
+  h+='<table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>投放次数</th><th>总消耗</th><th>总GMV</th><th>ROI</th></tr></thead><tbody>';
+  if(active.length){
+    active.forEach(function(d){h+='<tr><td>'+d['人群']+'</td><td>'+d['细分']+'</td><td>'+d['投放次数']+'</td><td>¥'+Math.round(d['总消耗']).toLocaleString()+'</td><td>¥'+Math.round(d['总GMV']).toLocaleString()+'</td><td class="'+rC(d['ROI'])+'">'+d['ROI'].toFixed(2)+'</td></tr>';});
+  } else {
+    h+='<tr><td colspan="6" style="text-align:center;color:#bbb;padding:16px">暂无出单数据</td></tr>';
+  }
   h+='</tbody></table>';
-  if(inactive.length){
-    h+='<p class="sec-title" style="margin-top:8px">有消耗但未出单的方向</p><table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>消耗</th><th>GMV</th></tr></thead><tbody>';
+  if(showInactive&&inactive.length){
+    h+='<p class="sec-title" style="margin-top:4px">有消耗但未出单</p><table class="dir-table"><thead><tr><th>人群</th><th>细分</th><th>消耗</th><th>GMV</th></tr></thead><tbody>';
     inactive.forEach(function(d){h+='<tr><td>'+d['人群']+'</td><td>'+d['细分']+'</td><td>¥'+Math.round(d['总消耗']).toLocaleString()+'</td><td class="rl">0</td></tr>';});
     h+='</tbody></table>';
   }
+  return h;
+}
+
+function doDir(){
+  var el=document.getElementById('dr');
+  var h=renderDirTable(DIR,'🟢 本月（5月）出单方向',true);
+  h+=renderDirTable(DIR_APR,'📊 上月（4月）出单方向',false);
   el.innerHTML=h;
 }
 
